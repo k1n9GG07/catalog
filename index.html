@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог товаров</title>
+</head>
+<body>
+
+    <h1>Каталог товаров</h1>
+    <div id="catalog"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const catalog = [
+                { name: "Отечественные", subcategories: ["Детективы", "Научная фантастика", "Исторические"] },
+                { name: "Зарубежные", subcategories: ["Детективы", "Научная фантастика", "Исторические"] }
+            ];
+
+            const catalogContainer = document.getElementById("catalog");
+
+            function renderCatalog() {
+                catalogContainer.innerHTML = "";
+                catalog.forEach(category => {
+                    const categoryElement = document.createElement("div");
+                    categoryElement.classList.add("category");
+                    
+                    const categoryTitle = document.createElement("h3");
+                    categoryTitle.textContent = category.name;
+                    categoryTitle.classList.add("category-title");
+                    categoryTitle.addEventListener("click", function () {
+                        subcategoryList.classList.toggle("hidden");
+                    });
+                    
+                    const subcategoryList = document.createElement("ul");
+                    subcategoryList.classList.add("subcategory-list", "hidden");
+                    
+                    category.subcategories.forEach(subcategory => {
+                        const subcategoryItem = document.createElement("li");
+                        subcategoryItem.textContent = subcategory;
+                        subcategoryItem.classList.add("subcategory-item");
+                        subcategoryList.appendChild(subcategoryItem);
+                    });
+                    
+                    categoryElement.appendChild(categoryTitle);
+                    categoryElement.appendChild(subcategoryList);
+                    catalogContainer.appendChild(categoryElement);
+                });
+            }
+
+            renderCatalog();
+        });
+
+        // Добавление стилей через JS
+        const style = document.createElement("style");
+        style.textContent = `
+            .category {
+                margin-bottom: 10px;
+                cursor: pointer;
+                padding: 5px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                background-color: #f9f9f9;
+            }
+            .category-title {
+                margin: 5px 0;
+                font-size: 18px;
+            }
+            .subcategory-list {
+                list-style-type: none;
+                padding-left: 15px;
+                margin: 5px 0;
+            }
+            .subcategory-item {
+                padding: 3px 0;
+                font-size: 16px;
+            }
+            .hidden {
+                display: none;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+
+</body>
+</html>
